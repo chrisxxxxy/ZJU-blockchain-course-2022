@@ -1,22 +1,5 @@
-# ZJU-blockchain-course-2022
 
-⬆ 可以️修改成你自己的项目名。
-
-> 第二次作业要求（可以删除）：
-> 
-> 去中心化学生社团组织治理应用 
-> 
-> - 每个学生初始可以拥有或领取一些通证积分（ERC20）。 
-> - 每个学生可以在应用中可以： 
->    1. 使用一定数量通证积分，发起关于该社团进行活动或制定规则的提案（Proposal）。 
->    2. 提案发起后一定支出时间内，使用一定数量通证积分可以对提案进行投票（赞成或反对，限制投票次数），投票行为被记录到区块链上。 
->    3. 提案投票时间截止后，赞成数大于反对数的提案通过，提案发起者作为贡献者可以领取一定的积分奖励。 
-> 
-> - (Bonus）发起提案并通过3次的学生，可以领取社团颁发的纪念品（ERC721）
-
-**以下内容为作业仓库的README.md中需要描述的内容。请根据自己的需要进行修改并提交。**
-
-作业提交方式为：提交视频文件和仓库的连接到指定邮箱。
+# Dapp-Community Proposing and Voting Platform
 
 ## 如何运行
 
@@ -26,28 +9,61 @@
     ```bash
     npm install
     ```
-3. 在 `./contracts` 中编译合约，运行如下的命令：
+3. 在 `./contracts/contracts` 中编译合约，运行如下的命令：
     ```bash
     npx hardhat compile
     ```
-4. ...
-5. ...
-6. 在 `./frontend` 中启动前端程序，运行如下的命令：
+4. 在`./contracts` 内部署合约，运行如下的命令：
     ```bash
-    npm run start
+    npx hardhat run ./scripts/deploy.ts --network ganache
+    ```
+5. 获取返回的contract的地址，并修改`./frontend/src/utils/contract-addresses.json`内的合约地址
+    ```bash
+    {
+      "lottery": "0xCC4DF91cc9A9139A6D8285a3eABaEeD2Ed47003a", // 修改为部署得到的地址
+      "myERC20": "0xA493F066d3B04C423b633511506246d70789C44A" // 修改为部署得到的地址
+    }
+    ```
+6. 使用`./contracts/artifacts/contracts/Lottery.sol/Lottery.json`替换`./frontend/src/utils/abis/Lottery.json`；使用`./contracts/artifacts/contracts/Lottery.sol/MyER20.json`替换`./frontend/src/utils/abis/MyER20.json`
+7. 在 `./frontend` 中安装需要的依赖，运行如下的命令：
+    ```bash
+    npm install
+    ```
+7. 在 `./frontend` 中启动前端程序，运行如下的命令：
+    ```bash
+    npm start
     ```
 
 ## 功能实现分析
+0. 数据结构
+  * 利用 `uint256 ID` 标识每条提议。
+  * 利用 `mapping(uint256 => string) public PropName` 和 `mapping(uint256 => string) public PropData` 存储每个ID对应提议的标题与内容信息，利用 `mapping(uint256 => address) public PropInit` 存储每个ID对应提议的发起者的地址。
+  * 利用 `mapping(uint256 => uint256) public VoteEnd` 存储每个ID对应提议的结束投票时间，利用 `mapping(uint256 => uint256) public TimeLeft`  存储每个ID对应提议的剩余投票时间，利用 `mapping(uint256 => uint256) public AyeCounts` 和 `mapping(uint256 => uint256) public NatCounts` 存储每个ID对应的提议的赞同票数和反对票数。
+1. 连接钱包和积分获取
+保留了框架内实现连接钱包功能的函数，通过MetaMask连接到用户的钱包。用户连接到钱包后，在前端显示用户的钱包地址。保留了框架内领取积分的函数，用户点击领取积分后，可领取500积分。
 
-简单描述：项目完成了要求的哪些功能？每个功能具体是如何实现的？
+2. 提交提议
+用户通过前端的两个Input框进行输入。在用户按下提交按钮后，前端发起合约调用交易，调用函数，新建一个提议，并扣除50积分。在提议新建成功后，将自动进入投票环节。
 
-建议分点列出。
+3. 查询提议信息
+用户点击前端界面的刷新按钮授权访问后，前端发起合约调用交易，从合约账户取得相关信息，前端得到信息后将其渲染至表格，即可在前端显示自己提出的提议信息与当前平台内的所有提议信息。
+
+4. 进行投票
+用户成功提议信息后，可点击提议后的“操作”按钮并授权访问，对该提议进行投票。用户仅可在有效投票时间段内进行投票，投票动作将被记录在区块链上，投票成功后，该用户会被扣除5积分。
+
+5. 计票与开票
+使用管理员账户登陆（连接到管理员钱包），可使用开票功能。管理员点击前端的“统计投票”按钮并授权访问，即可对当前所有投票已结束但未开票的投票进行开票。开票后，根据投票情况将该提议标识为”通过“或”不通过“，并将该提议收到的所有投票产生的积分作为奖励全部转账给该提议的发起者。未通过的投票的发起者不会得到奖励。
+
 
 ## 项目运行截图
 
-放一些项目运行截图。
-
-项目运行成功的关键页面和流程截图。主要包括操作流程以及和区块链交互的截图。
+![截屏2022-11-07 下午9.39.53.png](quiver-image-url/4D6CE6AEA5DF50DB93CC61F855B8A8C8.png =1437x768)
+![截屏2022-11-07 下午9.40.13.png](quiver-image-url/782C1862302B0813C9209F20F6E15FB5.png =1434x685)
+![截屏2022-11-07 下午9.40.26.png](quiver-image-url/9D77798ADB6DF57FBDA0E96816F5D664.png =1427x482)
+![截屏2022-11-07 下午9.40.39.png](quiver-image-url/36E776F13A17B819A7ED84F0CCA4612B.png =1426x572)
+![截屏2022-11-07 下午9.40.57.png](quiver-image-url/AFFC76A478DB8A886A3E7719DE4A33C2.png =1410x656)
+![截屏2022-11-07 下午9.41.16.png](quiver-image-url/CCC254C80FA04561C7A093DD5AB48598.png =1426x714)
+![截屏2022-11-07 下午9.41.32.png](quiver-image-url/F6D321DC5611776114DD7A4EDA044AD7.png =1422x660)
 
 ## 参考内容
 
