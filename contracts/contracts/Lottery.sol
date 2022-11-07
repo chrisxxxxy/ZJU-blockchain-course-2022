@@ -22,8 +22,8 @@ contract Lottery {
     mapping(uint256 => uint256) public AyeCounts;
     mapping(uint256 => uint256) public NayCounts;
 
-    MyERC20 public myERC20; // 彩票相关的代币合约
-    address public manager; // 管理员，用来开奖和退款
+    MyERC20 public myERC20; // 代币合约
+    address public manager; // 管理员
 
     // 管理员
     constructor() {
@@ -49,6 +49,7 @@ contract Lottery {
         VoteEnd[ID] = uint256(block.timestamp) + VOTING_TIME;
     }
 
+    //返回提案投票剩余时间
     function getTimeLeft(uint256 i) public returns (uint256) {
         if (uint256(block.timestamp) > VoteEnd[i]) {
             TimeLeft[i] = 0;
@@ -58,18 +59,22 @@ contract Lottery {
         return TimeLeft[i];
     }
 
+    //返回提案状态
     function getFlag(uint256 i) public view returns (uint256) {
         return Flags[i];
     }
 
+    //返回提案投票赞同票数
     function getAyes(uint256 i) public view returns (uint256) {
         return AyeCounts[i];
     }
 
+    //返回提案投票反对票数
     function getNays(uint256 i) public view returns (uint256) {
         return NayCounts[i];
     }
 
+    //投赞同票
     function Aye(uint256 i) public returns (uint256) {
         if (block.timestamp < VoteEnd[i]) {
             AyeCounts[i]++;
@@ -78,6 +83,7 @@ contract Lottery {
         } else return 0;
     }
 
+    //投反对票
     function Nay(uint256 i) public returns (uint256) {
         if (block.timestamp < VoteEnd[i]) {
             NayCounts[i]++;
@@ -86,6 +92,7 @@ contract Lottery {
         } else return 0;
     }
 
+    //开票
     function Close(uint256 i) public onlyManager {
         if (TimeLeft[i] == 0 && Flags[i] == 0) {
             if ((AyeCounts[i] - NayCounts[i]) > 0) {
@@ -100,14 +107,17 @@ contract Lottery {
         }
     }
 
+    //返回提案发起者地址
     function getAddrbyID(uint256 id) external view returns (address) {
         return PropInit[id];
     }
 
+    //返回提案标题
     function getNamebyID(uint256 id) external view returns (string memory) {
         return PropName[id];
     }
 
+    //返回提案内容
     function getDatabyID(uint256 id) external view returns (string memory) {
         return PropData[id];
     }
