@@ -1,0 +1,55 @@
+@import '~antd/dist/antd.css';
+
+.container {
+    width: 500px;
+    height: 600px;
+
+    background: #F2F3F4;
+}
+
+.main {
+    padding: 10px;
+}
+
+.operation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 20px;
+}
+
+.buttons {
+    height: 120px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-body {
+    height: 100%;
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
+    display: grid;
+    grid-template-columns: minmax(-webkit-max-content, 1fr) minmax(-webkit-min-content, 350px);
+    grid-template-columns: minmax(max-content, 1fr) minmax(min-content, 350px);
+    -moz-column-gap: 4rem;
+    column-gap: 4rem;
+  }
+
+  .site-page-header-ghost-wrapper {
+    padding: 24px;
+    background-color: #f5f5f5;
+  }
+
+.data-box{
+    margin-top: 5%;
+}
+
+.myprops{
+    margin-top: 5%;
+}
