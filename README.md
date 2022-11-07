@@ -57,7 +57,7 @@
 
 ## 项目运行截图
 
-![截屏2022-11-07 下午9.39.53.png](quiver-image-url/4D6CE6AEA5DF50DB93CC61F855B8A8C8.png =1437x768)
+![](./readmeResource/1.png)
 ![截屏2022-11-07 下午9.40.13.png](quiver-image-url/782C1862302B0813C9209F20F6E15FB5.png =1434x685)
 ![截屏2022-11-07 下午9.40.26.png](quiver-image-url/9D77798ADB6DF57FBDA0E96816F5D664.png =1427x482)
 ![截屏2022-11-07 下午9.40.39.png](quiver-image-url/36E776F13A17B819A7ED84F0CCA4612B.png =1426x572)
