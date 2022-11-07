@@ -57,13 +57,7 @@
 
 ## 项目运行截图
 
-![](./readmeResource/1.png)
-![截屏2022-11-07 下午9.40.13.png](quiver-image-url/782C1862302B0813C9209F20F6E15FB5.png =1434x685)
-![截屏2022-11-07 下午9.40.26.png](quiver-image-url/9D77798ADB6DF57FBDA0E96816F5D664.png =1427x482)
-![截屏2022-11-07 下午9.40.39.png](quiver-image-url/36E776F13A17B819A7ED84F0CCA4612B.png =1426x572)
-![截屏2022-11-07 下午9.40.57.png](quiver-image-url/AFFC76A478DB8A886A3E7719DE4A33C2.png =1410x656)
-![截屏2022-11-07 下午9.41.16.png](quiver-image-url/CCC254C80FA04561C7A093DD5AB48598.png =1426x714)
-![截屏2022-11-07 下午9.41.32.png](quiver-image-url/F6D321DC5611776114DD7A4EDA044AD7.png =1422x660)
+![1](./readmeResources/1.png)
 
 ## 参考内容
 
